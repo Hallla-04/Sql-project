@@ -1,0 +1,49 @@
+create database store;
+use store;
+create table countries(
+id int primary key,
+name varchar(20) unique,
+continent_name varchar(20) not null
+);
+create table users(
+id int primary key not null,
+full_name varchar(20) not null,
+email varchar(20) unique,
+gender char(1) not null check(gender='m' or gender='f') ,
+data_of_birth varchar(15) not null,
+created_at datetime,
+country_code int,
+foreign key (country_code) references countries(id)
+);
+create table orders(
+id int primary key not null,
+user_id int,
+foreign key(user_id) references users(id),
+status varchar(6) check(status='status' or status='finish'),
+created_at datetime
+);
+create table products (
+id int primary key not null,
+name varchar(10) not null,
+price int default 0,
+status varchar(10) check(status='valid' or status='expired'),
+created_at datetime
+);
+create table order_products(
+order_id int ,
+ foreign key(order_id) references orders(id),
+ product_id int default 0,
+ primary key(order_id,product_id),
+ foreign key(product_id) references products(id)
+);
+/*alter table order_products add column quantity int;
+ insert into countries values('1','hala','riyadh') 
+
+insert into order_products values('6','8','9') 
+
+
+insert into users values('10','sara','sa@hotmail.com','f','3-3-1998','2021-03-01','1')
+insert into orders values('11','4','finish','2021-03-01') 
+insert into products values('5','ahmed','7','valid','2021-04-01')
+update countries set name='muna' where id='1'
+delete from products where id='5' */ 
